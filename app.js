@@ -44,7 +44,7 @@ const getPlayersOnline = async () => {
 
 app.use("/", (req, res, next) => {
   if (!req.cookies.contactlist) {
-    res.cookie("contactlist", []);
+    res.cookie("contactlist", [], { maxAge: 24 * 60 * 60 * 1000 });
   }
 
   next();
@@ -74,7 +74,7 @@ app.get("/contact-list", async (req, res) => {
     });
   });
 
-  res.cookie("contactlist", contactlist);
+  res.cookie("contactlist", contactlist, { maxAge: 24 * 60 * 60 * 1000 });
   res.render("contactlist", { contactlist: contactlist });
 });
 
@@ -105,7 +105,7 @@ app.get("/remove-contact/:contactId", (req, res) => {
 
   const filteredArray = contactlist.filter((item) => item.id !== contactId);
 
-  res.cookie("contactlist", filteredArray);
+  res.cookie("contactlist", filteredArray, { maxAge: 24 * 60 * 60 * 1000 });
   res.redirect("/contact-list");
 });
 
