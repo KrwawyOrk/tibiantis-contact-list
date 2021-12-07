@@ -62,10 +62,10 @@ app.get("/contact-list", async (req, res) => {
   const { contactlist } = req.cookies;
   const tibiantisPlayersList = await getPlayersOnline();
 
-  contactlist.map((contact) => {
+  contactlist.forEach((contact) => {
     contact.status = "Offline";
 
-    return tibiantisPlayersList.find((contactOnline) => {
+    tibiantisPlayersList.find((contactOnline) => {
       if (contactOnline.name === contact.name) {
         contact.vocation = contactOnline.vocation;
         contact.level = contactOnline.level;
