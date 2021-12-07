@@ -62,17 +62,18 @@ app.get("/contact-list", async (req, res) => {
   const { contactlist } = req.cookies;
   const tibiantisPlayersList = await getPlayersOnline();
 
-  contactlist.forEach((contact) => {
-    contact.status = "Offline";
+  contactlist.forEach(contact => {
+    const match = tibiantisPlayersList.find(contactOnline => contactOnline.name === contact.name);
+    if (match) {
+      contact.vocation = match.vocation;
+      contact.level = match.level;
+      contact.status = "Online";
+    }
 
-    tibiantisPlayersList.find((contactOnline) => {
-      if (contactOnline.name === contact.name) {
-        contact.vocation = contactOnline.vocation;
-        contact.level = contactOnline.level;
-        contact.status = "Online";
-      }
-    });
-  });
+    else {
+      contact.status = "Offline";
+    }
+  })
 
   res.cookie("contactlist", contactlist, { maxAge: 24 * 60 * 60 * 1000 });
   res.render("contactlist", { contactlist: contactlist });
