@@ -1,0 +1,27 @@
+html
+    head
+        style
+            include style.css
+        title= "Tibiantis Contact List by Krwawy Ork"
+    body
+
+include header.pug
+include navigationbar.pug
+
+div(class="content-container")
+    if(playersOnlineArray.length)
+        table
+            tr 
+                th Name
+                th Vocation
+                th Level
+                    for val, index in playersOnlineArray
+                        tr 
+                            td=`${val.name}`
+                            td=`${val.vocation}`
+                            td=`${val.level}`
+
+    else
+        div(class="alert-message")
+            p(style={margin: '0 2rem 0 0'}) Your Tibiantis contact list is empty. Add a friend to the list!
+            a(class="btn-delete" onclick="this.parentElement.style.display='none';") &times;

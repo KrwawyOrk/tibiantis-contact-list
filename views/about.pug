@@ -1,0 +1,21 @@
+html
+    head
+        style
+            include style.css
+        title= "Tibiantis Contact List by Krwawy Ork"
+    body
+
+include header.pug
+include navigationbar.pug
+
+div(class="content-container")
+    div(class="alert-message")
+        div(style={margin: '0 2rem 0 0', color: 'darkslategrey'}) 
+            p The project was created as part of learning how to develop web applications. I used tools such as: Express JS, jsdom and uuid. Player contacts are stored in cookies. I do not guarantee that the application is free of bugs or security vulnerabilities.
+            br
+            p Best regards,
+            p Krwawy Ork
+            br
+            br
+            p https://github.com/KrwawyOrk
+        a(class="btn-delete" onclick="this.parentElement.style.display='none';") &times;

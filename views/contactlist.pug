@@ -1,0 +1,34 @@
+html
+    head
+        style
+            include style.css
+        title= "Tibiantis Contact List by Krwawy Ork"
+    body
+
+include header.pug
+include navigationbar.pug
+
+div(class="content-container")
+    include addcontactform.pug
+    if(contactlist.length)
+        table
+            tr 
+                th Name
+                th Vocation
+                th Level
+                th Status
+                th Actions
+                    for contact, index in contactlist
+                        tr 
+                            td=`${contact.name}`
+                            td=`${contact.vocation}`
+                            td=`${contact.level}`
+                            td(style={color: contact.status === "Online" ? "Green" : "maroon"})=`${contact.status}`
+                            td
+                                a(class="btn-delete" href=`/remove-contact/${contact.id}`) &times;
+
+
+    else
+        div(class="alert-message")
+            p(style={margin: '0 2rem 0 0'}) Your Tibiantis contact list is empty. Add a friend to the list!
+            a(class="btn-delete" onclick="this.parentElement.style.display='none';") &times;
