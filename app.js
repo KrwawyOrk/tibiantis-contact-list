@@ -114,28 +114,6 @@ app.get("/players-online-table", async (req, res) => {
   res.render("playersOnlineList", { playersOnlineArray: playersOnlineArray });
 });
 
-app.get("/clear-cookie/:cookieName", (req, res) => {
-  const { cookieName } = req.params;
-
-  res.clearCookie(cookieName);
-  res.send(`Ciasteczka ${cookieName} zostaly zjedzone.... lub wyrzucone.`);
-});
-
-app.get("/check-online/:playerName", (req, res) => {
-  const { playerName } = req.params;
-
-  const getPlayersOnlineData = async () => {
-    const tibiantisData = await retrieveData();
-    const result = tibiantisData.includes(playerName);
-
-    result
-      ? res.send(`<p>Player ${playerName} is online</p>`)
-      : res.send(`<p>Player ${playerName} is offline</p>`);
-  };
-
-  getPlayersOnlineData();
-});
-
 app.get("/about", (req, res) => {
   res.render("about");
 });
