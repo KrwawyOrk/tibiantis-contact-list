@@ -6,7 +6,6 @@ const cookieParser = require(`cookie-parser`);
 const { uuid } = require("uuidv4");
 
 const jsdom = require("jsdom");
-const e = require("express");
 const { JSDOM } = jsdom;
 
 const app = express();
@@ -18,6 +17,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const port = 3000;
 const PLAYERS_ONLINE_URL = "https://tibiantis.online/?page=WhoIsOnline";
+
+app.set('port', process.env.PORT || 3000);
 
 const retrieveData = async () => {
   const response = await axios.get(PLAYERS_ONLINE_URL);
