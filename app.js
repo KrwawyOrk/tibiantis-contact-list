@@ -57,6 +57,10 @@ app.get("/", (req, res) => {
   res.redirect("/contact-list");
 });
 
+app.get("/index", (req, res) => {
+  res.redirect("/contact-list");
+});
+
 app.get("/contact-list", async (req, res) => {
   const { contactlist } = req.cookies;
   const tibiantisPlayersList = await getPlayersOnline();
