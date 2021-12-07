@@ -15,10 +15,7 @@ app.use(session({ secret: "Shh, its a secret!" }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const port = 3000;
 const PLAYERS_ONLINE_URL = "https://tibiantis.online/?page=WhoIsOnline";
-
-app.set('port', process.env.PORT || 3000);
 
 const retrieveData = async () => {
   const response = await axios.get(PLAYERS_ONLINE_URL);
@@ -123,6 +120,4 @@ app.get("/about", (req, res) => {
   res.render("about");
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}.`);
-});
+app.listen(process.env.PORT || 3000);
