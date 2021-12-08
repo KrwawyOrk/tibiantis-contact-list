@@ -62,18 +62,18 @@ app.get("/contact-list", async (req, res) => {
   const { contactlist } = req.cookies;
   const tibiantisPlayersList = await getPlayersOnline();
 
-  contactlist.forEach(contact => {
-    const match = tibiantisPlayersList.find(contactOnline => contactOnline.name === contact.name);
+  contactlist.forEach((contact) => {
+    const match = tibiantisPlayersList.find(
+      (contactOnline) => contactOnline.name === contact.name
+    );
     if (match) {
       contact.vocation = match.vocation;
       contact.level = match.level;
       contact.status = "Online";
-    }
-
-    else {
+    } else {
       contact.status = "Offline";
     }
-  })
+  });
 
   res.cookie("contactlist", contactlist, { maxAge: 24 * 60 * 60 * 1000 });
   res.render("contactlist", { contactlist: contactlist });
@@ -95,7 +95,9 @@ app.post("/add-contact", (req, res) => {
     };
 
     res
-      .cookie("contactlist", [newContact, ...contactlist], { maxAge: 24 * 60 * 60 * 1000 })
+      .cookie("contactlist", [newContact, ...contactlist], {
+        maxAge: 24 * 60 * 60 * 1000,
+      })
       .redirect("/contact-list");
   }
 });
@@ -119,6 +121,10 @@ app.get("/players-online-table", async (req, res) => {
 
 app.get("/about", (req, res) => {
   res.render("about");
+});
+
+app.get("/apitest", (req, res) => {
+  res.send({ what: "api", is: "test" });
 });
 
 app.listen(process.env.PORT || 3000);
