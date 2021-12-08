@@ -84,7 +84,7 @@ app.post("/add-contact", (req, res) => {
   const { contactlist } = req.cookies;
 
   if (contactlist.find((element) => element.name === newContactName)) {
-    res.send(`The contact already exists in your list.`);
+    res.render("contactalreadyexists");
   } else {
     const newContact = {
       id: uuid(),
@@ -95,7 +95,7 @@ app.post("/add-contact", (req, res) => {
     };
 
     res
-      .cookie("contactlist", [newContact, ...contactlist])
+      .cookie("contactlist", [newContact, ...contactlist], { maxAge: 24 * 60 * 60 * 1000 })
       .redirect("/contact-list");
   }
 });

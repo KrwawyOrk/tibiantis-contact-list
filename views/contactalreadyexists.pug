@@ -1,0 +1,16 @@
+html
+    head
+        meta(charset='utf-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1')
+        style
+            include style.css
+        title= "Tibiantis Contact List by Krwawy Ork"
+    body
+
+include header.pug
+include navigationbar.pug
+
+div(class="content-container")
+    div(class="alert-message")
+        p(style={margin: '0 2rem 0 0'}) The contact already exists in your list.
+        a(class="btn-delete" onclick="this.parentElement.style.display='none';") &times;
