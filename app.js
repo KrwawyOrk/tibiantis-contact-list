@@ -69,10 +69,9 @@ app.get("/contact-list", async (req, res) => {
     if (match) {
       contact.vocation = match.vocation;
       contact.level = match.level;
-      contact.status = "Online";
-    } else {
-      contact.status = "Offline";
     }
+
+    contact.status = match ? "Online" : "Offline";
   });
 
   res.cookie("contactlist", contactlist, { maxAge: 24 * 60 * 60 * 1000 });
