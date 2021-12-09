@@ -22,10 +22,10 @@ div(class="content-container")
                 th Actions
                     for contact, index in contactlist
                         tr 
-                            td=`${contact.name}`
+                            td(class="text-left")=`${index + 1}. ${contact.name}`
                             td=`${contact.vocation}`
                             td=`${contact.level}`
-                            td(style={color: contact.status === "Online" ? "Green" : "maroon"})=`${contact.status}`
+                            td(style={color: contact.status === "Online" ? "Green" : "firebrick"})=`${contact.status}`
                             td
                                 a(class="btn-delete" href=`/remove-contact/${contact.id}`) &times;
 

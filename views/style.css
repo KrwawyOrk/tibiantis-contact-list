@@ -161,6 +161,14 @@ tr:nth-child(even) {
   background-color: #ddd;
 }
 
+.text-left {
+  text-align: left;
+}
+
+.p-2 {
+  padding-left: 2rem;
+}
+
 @media (min-width: 576px) {
   .navigation-bar {
     display: flex;
