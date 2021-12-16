@@ -3,7 +3,6 @@ const axios = require("axios");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const cookieParser = require(`cookie-parser`);
-const cors = require("cors");
 
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
@@ -11,7 +10,6 @@ const { JSDOM } = jsdom;
 const app = express();
 app.set("view engine", "pug");
 
-app.use(cors);
 app.use(session({ secret: "Shh, its a secret!" }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
