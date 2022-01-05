@@ -122,8 +122,4 @@ app.get("/about", (req, res) => {
   res.render("about");
 });
 
-app.get("/apitest", (req, res) => {
-  res.send({ what: "api", is: "test" });
-});
-
 app.listen(process.env.PORT || 3000);
