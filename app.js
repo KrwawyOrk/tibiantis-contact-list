@@ -44,7 +44,7 @@ const getPlayersOnline = async () => {
 
 app.use("/", (req, res, next) => {
   if (!req.cookies.contactlist) {
-    res.cookie("contactlist", [], { maxAge: 24 * 60 * 60 * 1000 });
+    res.cookie("contactlist", [], { maxAge: 168 * 60 * 60 * 1000 });
   }
 
   next();
@@ -74,7 +74,7 @@ app.get("/contact-list", async (req, res) => {
     contact.status = match ? "Online" : "Offline";
   });
 
-  res.cookie("contactlist", contactlist, { maxAge: 24 * 60 * 60 * 1000 });
+  res.cookie("contactlist", contactlist, { maxAge: 168 * 60 * 60 * 1000 });
   res.render("contactlist", { contactlist: contactlist });
 });
 
@@ -95,7 +95,7 @@ app.post("/add-contact", (req, res) => {
 
     res
       .cookie("contactlist", [newContact, ...contactlist], {
-        maxAge: 24 * 60 * 60 * 1000,
+        maxAge: 168 * 60 * 60 * 1000,
       })
       .redirect("/contact-list");
   }
@@ -107,7 +107,7 @@ app.get("/remove-contact/:contactId", (req, res) => {
 
   const filteredArray = contactlist.filter((item) => item.id !== contactId);
 
-  res.cookie("contactlist", filteredArray, { maxAge: 24 * 60 * 60 * 1000 });
+  res.cookie("contactlist", filteredArray, { maxAge: 168 * 60 * 60 * 1000 });
   res.redirect("/contact-list");
 });
 
