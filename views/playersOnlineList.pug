@@ -8,13 +8,13 @@ div(class="content-container")
                 th Vocation
                 th Level
                 th Actions
-                    for val, index in playersOnlineArray
+                    for player in playersOnlineArray
                         tr 
-                            td=`${val.name}`                   
-                            td=`${val.vocation}`
-                            td=`${val.level}`
+                            td(class="text-left")=`${player.name}`                   
+                            td=`${player.vocation}`
+                            td=`${player.level}`
                             td
-                                a(class="btn-add" href=`/add-contact-by-name/${val.name}`) +
+                                a(class="btn-add" href=`/add-contact-by-name/${player.name}`) +
 
     else
         div(class="alert-message")
