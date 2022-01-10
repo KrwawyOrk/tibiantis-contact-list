@@ -17,11 +17,14 @@ div(class="content-container")
                 th Name
                 th Vocation
                 th Level
+                th Actions
                     for val, index in playersOnlineArray
                         tr 
-                            td=`${val.name}`
+                            td=`${val.name}`                   
                             td=`${val.vocation}`
                             td=`${val.level}`
+                            td
+                                a(class="btn-add" href=`/add-contact-by-name/${val.name}`) +
 
     else
         div(class="alert-message")

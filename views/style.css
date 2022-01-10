@@ -45,7 +45,24 @@
 }
 
 .btn-delete:hover {
-  background-color: #f3291a;
+  color: black;
+}
+
+.btn-add {
+  background-color: #1f7a6e;
+  border: none;
+  color: white;
+  padding: 1px 6px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 22px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-add:hover {
   color: black;
 }
 

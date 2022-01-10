@@ -1,6 +1,5 @@
 const express = require("express");
 const axios = require("axios");
-const session = require("express-session");
 const bodyParser = require("body-parser");
 const cookieParser = require(`cookie-parser`);
 const { uuid } = require("uuidv4");
@@ -11,7 +10,6 @@ const { JSDOM } = jsdom;
 const app = express();
 app.set("view engine", "pug");
 
-app.use(session({ secret: "Shh, its a secret!" }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -80,6 +78,29 @@ app.get("/contact-list", async (req, res) => {
 
 app.post("/add-contact", (req, res) => {
   const { newContactName } = req.body;
+  const { contactlist } = req.cookies;
+
+  if (contactlist.find((element) => element.name === newContactName)) {
+    res.render("contactalreadyexists");
+  } else {
+    const newContact = {
+      id: uuid(),
+      name: newContactName,
+      vocation: "?",
+      level: "?",
+      status: "?",
+    };
+
+    res
+      .cookie("contactlist", [newContact, ...contactlist], {
+        maxAge: 168 * 60 * 60 * 1000,
+      })
+      .redirect("/contact-list");
+  }
+});
+
+app.get("/add-contact-by-name/:newContactName", (req, res) => {
+  const { newContactName } = req.params;
   const { contactlist } = req.cookies;
 
   if (contactlist.find((element) => element.name === newContactName)) {
