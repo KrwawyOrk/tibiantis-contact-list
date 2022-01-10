@@ -12,7 +12,7 @@ div(class="content-container")
                 th Actions
                     for contact, index in contactlist
                         tr 
-                            td(class="text-left")=`${contact.name}`
+                            td(class="text-left")=`${index + 1}. ${contact.name}`
                             td=`${contact.vocation}`
                             td=`${contact.level}`
                             td(style={color: contact.status === "Online" ? "Green" : "firebrick"})=`${contact.status}`
