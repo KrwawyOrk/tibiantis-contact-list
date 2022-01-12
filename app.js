@@ -17,6 +17,8 @@ const WEEK = 168 * 60 * 60 * 1000;
 
 app.use(async (req, res, next) => {
   app.locals.tibiantisOnlineNumber = await getPlayersOnlineNumber();
+  app.locals.contactsNumber = req.cookies.contactlist ? req.cookies.contactlist.length : 0;
+
   next();
 });
 
@@ -25,7 +27,6 @@ app.use("/", (req, res, next) => {
     res.cookie("contactlist", [], { maxAge: WEEK });
   }
 
-  app.locals.contactsNumber = req.cookies.contactlist ? req.cookies.contactlist.length : 0;
   next();
 });
 
