@@ -1,9 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require(`cookie-parser`);
+
 const { uuid } = require("uuidv4");
 
 const { getPlayersOnlineArray } = require("./tibiantisfunctions/getPlayersOnlineArray");
+const { getPlayersOnlineNumber } = require("./tibiantisfunctions/getPlayersOnlineNumber");
 
 const app = express();
 app.set("view engine", "pug");
@@ -13,11 +15,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const WEEK = 168 * 60 * 60 * 1000;
 
+app.use(async (req, res, next) => {
+  app.locals.tibiantisOnlineNumber = await getPlayersOnlineNumber();
+  next();
+});
+
 app.use("/", (req, res, next) => {
   if (!req.cookies.contactlist) {
     res.cookie("contactlist", [], { maxAge: WEEK });
   }
 
+  app.locals.contactsNumber = req.cookies.contactlist ? req.cookies.contactlist.length : 0;
   next();
 });
 
@@ -89,8 +97,6 @@ app.get("/remove-contact/:contactId", (req, res) => {
 
 app.get("/players-online-table", async (req, res) => {
   const playersOnlineArray = await getPlayersOnlineArray();
-
-  console.log(`Players online: ${playersOnlineArray.length}`);
   res.render("playersOnlineList", { playersOnlineArray: playersOnlineArray });
 });
 
