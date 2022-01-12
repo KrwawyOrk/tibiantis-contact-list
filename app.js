@@ -1,11 +1,9 @@
 const express = require("express");
-const axios = require("axios");
 const bodyParser = require("body-parser");
 const cookieParser = require(`cookie-parser`);
 const { uuid } = require("uuidv4");
 
-const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
+const { getPlayersOnlineArray } = require("./tibiantisfunctions/getPlayersOnlineArray");
 
 const app = express();
 app.set("view engine", "pug");
@@ -13,33 +11,7 @@ app.set("view engine", "pug");
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const PLAYERS_ONLINE_URL = "https://tibiantis.online/?page=WhoIsOnline";
 const WEEK = 168 * 60 * 60 * 1000;
-
-const retrieveData = async () => {
-  const response = await axios.get(PLAYERS_ONLINE_URL);
-  return response.data;
-};
-
-const getPlayersOnline = async () => {
-  const response = await retrieveData();
-
-  const dom = new JSDOM(response);
-  const playersTable = dom.window.document.querySelector(".tabi");
-  const playersTableDetails = playersTable.querySelectorAll("td");
-
-  const playersOnlineArray = [];
-
-  for (let i = 3; i < playersTableDetails.length; i += 3) {
-    playersOnlineArray.push({
-      name: playersTableDetails[i].textContent,
-      vocation: playersTableDetails[i + 1].textContent,
-      level: playersTableDetails[i + 2].textContent,
-    });
-  }
-
-  return playersOnlineArray;
-};
 
 app.use("/", (req, res, next) => {
   if (!req.cookies.contactlist) {
@@ -59,7 +31,7 @@ app.get("/index", (req, res) => {
 
 app.get("/contact-list", async (req, res) => {
   const { contactlist } = req.cookies;
-  const tibiantisPlayersList = await getPlayersOnline();
+  const tibiantisPlayersList = await getPlayersOnlineArray();
 
   contactlist.forEach((contact) => {
     const match = tibiantisPlayersList.find(
@@ -116,7 +88,7 @@ app.get("/remove-contact/:contactId", (req, res) => {
 });
 
 app.get("/players-online-table", async (req, res) => {
-  const playersOnlineArray = await getPlayersOnline();
+  const playersOnlineArray = await getPlayersOnlineArray();
 
   console.log(`Players online: ${playersOnlineArray.length}`);
   res.render("playersOnlineList", { playersOnlineArray: playersOnlineArray });
