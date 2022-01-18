@@ -5,9 +5,13 @@ div(class="content-container")
     if(contactlist.length)
         table
             tr 
-                th Name
+                th(class="th-style") 
+                    p Name
+                    a(href="/sort-by-name") &and;
                 th Vocation
-                th Level
+                th(class="th-style") 
+                    p Level
+                    a(href="/sort-by-level") &and;
                 th Status
                 th Actions
                     for contact, index in contactlist

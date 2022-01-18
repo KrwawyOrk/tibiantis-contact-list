@@ -182,8 +182,18 @@ tr:nth-child(even) {
   text-align: left;
 }
 
+.text-right { 
+  text-align: right;
+}
+
 .p-2 {
   padding-left: 2rem;
+}
+
+.th-style {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 @media (min-width: 576px) {

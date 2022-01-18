@@ -4,8 +4,12 @@ const cookieParser = require(`cookie-parser`);
 
 const { uuid } = require("uuidv4");
 
-const { getPlayersOnlineArray } = require("./tibiantisfunctions/getPlayersOnlineArray");
-const { getPlayersOnlineNumber } = require("./tibiantisfunctions/getPlayersOnlineNumber");
+const {
+  getPlayersOnlineArray,
+} = require("./tibiantisfunctions/getPlayersOnlineArray");
+const {
+  getPlayersOnlineNumber,
+} = require("./tibiantisfunctions/getPlayersOnlineNumber");
 
 const app = express();
 app.set("view engine", "pug");
@@ -17,7 +21,9 @@ const WEEK = 168 * 60 * 60 * 1000;
 
 app.use(async (req, res, next) => {
   app.locals.tibiantisOnlineNumber = await getPlayersOnlineNumber();
-  app.locals.contactsNumber = req.cookies.contactlist ? req.cookies.contactlist.length : 0;
+  app.locals.contactsNumber = req.cookies.contactlist
+    ? req.cookies.contactlist.length
+    : 0;
 
   next();
 });
@@ -103,6 +109,32 @@ app.get("/players-online-table", async (req, res) => {
 
 app.get("/about", (req, res) => {
   res.render("about");
+});
+
+app.get("/sort-by-name", (req, res) => {
+  const { contactlist } = req.cookies;
+  contactlist.sort((a, b) => {
+    if (a.name < b.name) {
+      return -1;
+    }
+    if (a.name > b.name) {
+      return 1;
+    }
+
+    return 0;
+  });
+
+  res.cookie("contactlist", contactlist, { maxAge: WEEK });
+  res.redirect("/contact-list");
+});
+
+app.get("/sort-by-level", (req, res) => {
+  const { contactlist } = req.cookies;
+
+  contactlist.sort((a, b) => b.level - a.level);
+
+  res.cookie("contactlist", contactlist, { maxAge: WEEK });
+  res.redirect("/contact-list");
 });
 
 app.listen(process.env.PORT || 3000);
